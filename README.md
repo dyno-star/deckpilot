@@ -1,33 +1,20 @@
-# Deckpilot
-
+# deckpilot
 Spaced-repetition training that converts company docs into daily practice.
-
-## Tech Stack
-
-- [Next.js](https://nextjs.org) - React framework
-- [Shadcn UI](https://ui.shadcn.com/) - Component library
-- [Tailwind CSS](https://tailwindcss.com) - Styling
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
 
 ## Getting Started
 
 1. Install dependencies:
+   npm install
 
-```bash
-npm install
-```
+2. Run the development server:
+   npm run dev
 
-2. Start the development server:
+3. Open http://localhost:3000 in your browser
 
-```bash
-npm run dev
-```
+## Available Scripts
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
-
-## Project Structure
-
-- `src/app/page.tsx` - Main page
-- `src/app/layout.tsx` - Root layout
-- `src/components/ui/` - Shadcn UI components
-- `src/lib/utils.ts` - Utility functions
+- npm run dev - Start development server with Turbopack
+- npm run build - Build for production
+- npm run start - Start production server
+- npm run lint - Run ESLint
+- npm run format - Format code with Prettier
