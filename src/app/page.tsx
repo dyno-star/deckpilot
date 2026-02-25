@@ -1,97 +1,162 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Brain, TrendingUp, Zap, ArrowRight } from "lucide-react";
+import { Plus, BookOpen, Trash2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+interface Deck {
+  id: string;
+  name: string;
+  description: string;
+  cardCount: number;
+}
 
 export default function Home() {
+  const [decks, setDecks] = useState<Deck[]>([
+    { id: "1", name: "JavaScript Basics", description: "Core JS concepts", cardCount: 24 },
+    { id: "2", name: "React Fundamentals", description: "React hooks and components", cardCount: 18 },
+  ]);
+  const [newDeckName, setNewDeckName] = useState("");
+  const [newDeckDescription, setNewDeckDescription] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleCreateDeck = () => {
+    if (newDeckName.trim()) {
+      const newDeck: Deck = {
+        id: Date.now().toString(),
+        name: newDeckName.trim(),
+        description: newDeckDescription.trim() || "No description",
+        cardCount: 0,
+      };
+      setDecks([...decks, newDeck]);
+      setNewDeckName("");
+      setNewDeckDescription("");
+      setIsDialogOpen(false);
+    }
+  };
+
+  const handleDeleteDeck = (id: string) => {
+    setDecks(decks.filter((deck) => deck.id !== id));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-900 to-black">
-      <nav className="border-b border-white/10 bg-black/50 backdrop-blur-sm">
-        <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Brain className="h-8 w-8 text-blue-500" />
-              <span className="text-xl font-bold text-white">Deckpilot</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/dashboard">
-                <Button variant="ghost" className="text-zinc-300 hover:text-white">
-                  Dashboard
-                </Button>
-              </Link>
-              <Link href="/practice">
-                <Button className="bg-blue-600 hover:bg-blue-700">
-                  Start Practice
-                </Button>
-              </Link>
-            </div>
-          </div>
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            Deckpilot
+          </h1>
+          <p className="mt-4 text-lg text-zinc-400">
+            Spaced-repetition training that converts company docs into daily practice.
+          </p>
         </div>
-      </nav>
 
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-center space-y-8 text-center">
-          <div className="max-w-3xl">
-            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">
-              Master Your Knowledge
-            </h1>
-            <p className="mt-6 text-xl leading-8 text-zinc-400">
-              Spaced-repetition training that converts company docs into daily practice.
-              Retain more, learn faster, and build lasting expertise.
-            </p>
-          </div>
-
-          <div className="mt-10 flex items-center space-x-4">
-            <Link href="/dashboard">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold text-white">My Decks</h2>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="gap-2">
+                <Plus className="h-4 w-4" />
+                New Deck
               </Button>
-            </Link>
-            <Link href="/practice">
-              <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                Try Demo
-              </Button>
-            </Link>
-          </div>
-
-          <div className="mt-20 grid gap-8 sm:grid-cols-3">
-            <Card className="border-white/10 bg-white/5">
-              <CardHeader>
-                <Brain className="h-10 w-10 text-blue-500" />
-                <CardTitle className="text-white">Smart Spaced Repetition</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-zinc-400">
-                  Our algorithm schedules reviews at optimal intervals to maximize retention and minimize study time.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-white/10 bg-white/5">
-              <CardHeader>
-                <BookOpen className="h-10 w-10 text-green-500" />
-                <CardTitle className="text-white">Doc to Deck</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-zinc-400">
-                  Transform your company documentation into interactive flashcard decks automatically.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-white/10 bg-white/5">
-              <CardHeader>
-                <TrendingUp className="h-10 w-10 text-purple-500" />
-                <CardTitle className="text-white">Track Progress</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-zinc-400">
-                  Monitor your learning journey with detailed analytics and performance insights.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
+            </DialogTrigger>
+            <DialogContent className="bg-zinc-900 border-zinc-800 text-white">
+              <DialogHeader>
+                <DialogTitle>Create New Deck</DialogTitle>
+                <DialogDescription className="text-zinc-400">
+                  Add a new deck to start organizing your flashcards.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Deck Name</Label>
+                  <Input
+                    id="name"
+                    placeholder="Enter deck name"
+                    value={newDeckName}
+                    onChange={(e) => setNewDeckName(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description (optional)</Label>
+                  <Input
+                    id="description"
+                    placeholder="Enter deck description"
+                    value={newDeckDescription}
+                    onChange={(e) => setNewDeckDescription(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsDialogOpen(false)}
+                  className="border-zinc-700 text-white hover:bg-zinc-800"
+                >
+                  Cancel
+                </Button>
+                <Button onClick={handleCreateDeck} disabled={!newDeckName.trim()}>
+                  Create Deck
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
+
+        {decks.length === 0 ? (
+          <Card className="border-zinc-800 bg-zinc-900/50">
+            <CardContent className="flex flex-col items-center justify-center py-16">
+              <BookOpen className="mb-4 h-12 w-12 text-zinc-600" />
+              <p className="text-zinc-400">No decks yet. Create your first deck to get started!</p>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {decks.map((deck) => (
+              <Card key={deck.id} className="border-zinc-800 bg-zinc-900/50 hover:border-zinc-700 transition-colors">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-white">{deck.name}</CardTitle>
+                      <CardDescription className="text-zinc-400">{deck.description}</CardDescription>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleDeleteDeck(deck.id)}
+                      className="h-8 w-8 text-zinc-500 hover:text-red-400 hover:bg-red-400/10"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center gap-2 text-sm text-zinc-400">
+                    <BookOpen className="h-4 w-4" />
+                    <span>{deck.cardCount} cards</span>
+                  </div>
+                  <Button className="mt-4 w-full" variant="outline">
+                    Practice
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
