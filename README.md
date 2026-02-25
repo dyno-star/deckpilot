@@ -1,42 +1,18 @@
-# Deckpilot
+# DeckPilot
 
 Spaced-repetition training that converts company docs into daily practice.
 
-## What is Deckpilot?
+## What is DeckPilot?
 
-Deckpilot is a learning platform that transforms your company's documentation into an interactive, daily training experience. Using spaced-repetition algorithms, it helps teams retain critical information by presenting bite-sized practice sessions at optimal intervals.
-
-## The Problem
-
-Company documentation is essential, but it's often:
-- **Overwhelming**: Too much information to absorb at once
-- **Forgotten**: Information fades quickly after reading
-- **Underutilized**: Valuable knowledge sits unused because people can't recall it when needed
-
-## The Solution
-
-Deckpilot solves these problems by:
-
-1. **Converting docs to practice**: Transform static documentation into interactive flashcards and quizzes
-2. **Spaced repetition**: Present information at scientifically-optimized intervals to maximize retention
-3. **Daily training**: Short, focused sessions that fit into your workflow
-4. **Progress tracking**: Monitor learning progress and identify knowledge gaps
-
-## How It Works
-
-1. **Import Documentation**: Connect to your company's knowledge base (Notion, Confluence, Google Docs, etc.)
-2. **Auto-Generate Cards**: AI-powered system creates practice cards from your content
-3. **Daily Practice**: Receive personalized daily sessions based on your learning schedule
-4. **Master Knowledge**: Gradually build long-term retention of critical information
+DeckPilot is a learning management system designed to help teams retain knowledge from company documentation through spaced repetition. Instead of reading documents once and forgetting them, DeckPilot transforms your company's documentation into interactive flashcards and daily practice sessions.
 
 ## Key Features
 
-- Multi-source Import: Connect to various documentation platforms
-- Smart Card Generation: AI automatically creates practice questions from docs
-- Spaced-Repetition Algorithm: Optimized review schedule for maximum retention
-- Progress Analytics: Track individual and team learning progress
-- Focused Sessions: Short, targeted practice sessions (5-10 minutes)
-- Adaptive Learning: System adjusts difficulty based on performance
+- Document-to-Deck Conversion: Automatically convert company documents into flashcard decks
+- Spaced Repetition System (SRS): Optimized review scheduling based on forgetting curves to maximize retention
+- Daily Practice: Personalized daily sessions that focus on cards you're most likely to forget
+- Progress Tracking: Monitor your learning progress and retention rates over time
+- Team Learning: Share decks across your team and track collective knowledge
 
 ## Getting Started
 
@@ -47,42 +23,53 @@ Deckpilot solves these problems by:
 
 ### Installation
 
+1. Clone the repository:
 ```bash
-# Clone the repository
 git clone https://github.com/dyno-star/deckpilot.git
 cd deckpilot
+```
 
-# Install dependencies
+2. Install dependencies:
+```bash
 npm install
 ```
 
-### Running the App
-
+3. Run the development server:
 ```bash
-# Start the development server
 npm run dev
 ```
 
-Open http://localhost:3000 in your browser to see the application.
-
-### Build for Production
-
-```bash
-# Create an optimized production build
-npm run build
-
-# Start the production server
-npm start
-```
+4. Open http://localhost:3000 in your browser
 
 ## Tech Stack
 
-- Framework: Next.js 15 with React 19
+- Framework: Next.js 15 with App Router
+- UI Library: React 19
 - Styling: Tailwind CSS
-- UI Components: Radix UI primitives
-- Type Safety: TypeScript
+- Components: Radix UI primitives
 - Form Handling: React Hook Form with Zod validation
+- Icons: Lucide React
+- Language: TypeScript
+
+## Available Scripts
+
+- npm run dev - Start development server with Turbopack
+- npm run build - Build for production
+- npm start - Start production server
+- npm run lint - Run ESLint
+- npm run format - Format code with Prettier
+
+## How It Works
+
+1. Import Documents: Upload or link your company documentation
+2. Generate Cards: DeckPilot analyzes content and creates question-answer pairs
+3. Daily Review: Complete your personalized daily practice session
+4. Track Progress: View statistics on your retention and learning streak
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT
+This project is private.
